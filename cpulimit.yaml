@@ -5,14 +5,14 @@ metadata:
   namespace: cpu-example
 spec:
   containers:
-  -name: cpu-demo-container
-   image: python/latest
-   resources:
-     limits:
-       cpu: "1"
-     requests:
-       cpu: "0.25"
-   args:
-   - -cpus
-   - "2"
+  - name: cpu-demo-container
+    image: python/latest
+    resources:
+      limits:
+        cpu: "1"
+      requests:
+        cpu: "0.25"
+    args:
+    - -cpus
+    - "2"
 
