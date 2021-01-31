@@ -1,18 +1,19 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: qos-demo-pod-Guaranteed
+  name: qos-demo-pod-burstable
   namespace: qos-example
 spec:
   containers:
   - name: qos-demo-container001
     image: nginx
     resources:
+      #qos example for burstable which means request < limit
       limits:
-        memory: "700Mi"
+        memory: "500Mi"
         cpu: "700m"
       requests:
-        memory: "700Mi"
-        cpu: "0.7"
+        memory: "500Mi"
+        cpu: "0.5"
 
 

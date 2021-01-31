@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-demo-pod-BestEffort
+  namespace: qos-example
+spec:
+  containers:
+  - name: qos-demo-container001
+    image: nginx
+    # QOS BestEffort example  which means we dont mention any resource request/limit values 
+
+
