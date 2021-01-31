@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: cpu-limit-1
+  name: cpu-requested-toobig
   namespace: cpu-example
 spec:
   containers:
