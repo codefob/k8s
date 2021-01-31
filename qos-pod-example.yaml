@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
   - name: qos-demo-container001
-    image: python
+    image: nginx
     resources:
       limits:
         memory: "700Mi"
