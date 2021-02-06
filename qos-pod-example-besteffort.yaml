@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: qos-demo-pod-BestEffort
+  name: qos-demo-pod-besteffort
   namespace: qos-example
 spec:
   containers:
