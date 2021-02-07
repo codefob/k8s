@@ -13,7 +13,7 @@ spec:
       image: nginx
       ports:
         - containerPort: 80
-          name: "http-server-testing"
+          name: "http-server"
       resources:
         limits:
           memory: 150Mi
