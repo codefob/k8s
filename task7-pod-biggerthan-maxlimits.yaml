@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task7-pod2-bigger-than-maxmemory
+  namespace: storage-ns
+
+spec:
+  containers:
+  # both Limit & requested mentioned for container
+  - name: container1-toobig-for-namespacemaxlimit
+    image: nginx
+    resources:
+      limits:
+        memory: "500Mi"
+        cpu: "2"
+
+      requests:
+        memory: "450Mi"
+        cpu: "1.5"
+
+#ErrorMessage- Error from server (Forbidden): error when creating "task7-pod-biggerthan-maxlimits.yaml": pods "task7-pod2-bigger-than-maxmemory" is forbidden: [maximum cpu usage per Container is 1, but limit is 2, maximum memory usage per Container is 300Mi, but limit is 500Mi]
+
