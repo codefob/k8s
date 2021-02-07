@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: qos-demo-pod-Guaranteed
+  name: qos-demo-pod-guaranteed
   namespace: qos-example
 spec:
   containers:
