@@ -11,6 +11,9 @@ spec:
   containers:
     - name: task5-pod-with-pvc
       image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server-testing"
       resources:
         limits:
           memory: 150Mi
