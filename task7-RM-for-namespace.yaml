@@ -19,4 +19,17 @@ spec:
       memory: 25Mi
       cpu: "0.25m"
     type: Container
+kind: ResourceQuota
+metadata:
+  name: resource-quota001
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 1Gi
+    limits.cpu: "4"
+    limits.memory: 2Gi
+    pods: "3"
+
+
+
 
