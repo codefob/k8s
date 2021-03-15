@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: task9-volume001
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 3Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/volume001"
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: task9-volume002
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/volume002"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task9-pvc-volume001
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task9-pvc-volume002
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+
+
+---
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: singlepod-multiple-volumes
+spec:
+  volumes:
+    - name: vol001
+      persistentVolumeClaim:
+        claimName: task9-pvc-volume001
+    - name: vol002
+      persistentVolumeClaim:
+        claimName: task9-pvc-volume002
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: /app1/volume001
+          name: vol001
+        - mountPath: /app2/volume002
+          name: vol002
+          
