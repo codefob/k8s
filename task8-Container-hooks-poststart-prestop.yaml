@@ -14,7 +14,8 @@ spec:
         postStart:
           exec:
             command: ["/bin/sh", "-c", "echo containerHooks > /poststarttest.txt"]
+
         preStop:
           exec:
-            command: ["/bin/sh", "-c", "sleep 600"]
+            command: ["/bin/sh","-c","while [ -f /poststarttest.txt ]; do sleep 30; done"]
 
