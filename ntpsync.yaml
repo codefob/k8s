@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    component: synch-ntp-server
+  name: synch-ntp-server
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      component: synch-ntp-server
+      tier: node
+  template:
+    metadata:
+      labels:
+        component: synch-ntp-server
+        tier: node
+    spec:
+      containers:
+      - name: synch-ntp-server
+        image: alpine
+        imagePullPolicy: IfNotPresent
+        command:
+          - nsenter
+          - --target
+          - "1"
+          - --mount
+          - --uts
+          - --ipc
+          - --net
+          - --pid
+          - --
+          - sh
+          - -c
+          - |
+            timedatectl set-ntp true
+        resources:
+          requests:
+            cpu: 10m
+        securityContext:
+          privileged: true
+      dnsPolicy: ClusterFirst
+      hostPID: true
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      restartPolicy: Always
+  updateStrategy:
+    type: OnDelete
+
