@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testingress
+  labels:
+    app: testingress
+spec:
+  containers:
+  - image: "mcr.microsoft.com/azuredocs/aks-helloworld:v1"
+    name: testingress
+    ports:
+    - containerPort: 80
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testingress
+spec:
+  selector:
+    app: testingress
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: testingress
+  annotations:
+    kubernetes.io/ingress.class: test
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /
+          backend:
+            serviceName: testingress
+            servicePort: 80
+        - path: /testingress/*
+          backend:
+            serviceName: testingress-service
+            servicePort: 80
+        - path: /testingress2/*
+          backend:
+            serviceName: testingress2-service
+            servicePort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-ingress
+  labels:
+    app: test-ingress
+spec:
+  containers:
+  - image: httpd
+    name: testingress
+    ports:
+    - containerPort: 80
+      protocol: TCP
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testingress2
+  labels:
+    app: testingress2
+spec:
+  containers:
+  - image: "mcr.microsoft.com/dotnet/core/samples:aspnetapp"
+    name: testingress2-service
+    ports:
+    - containerPort: 80
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testingress-service
+spec:
+  selector:
+    app: testingress
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testingress2-service
+spec:
+  selector:
+    app: testingress2
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
